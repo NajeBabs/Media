@@ -1,12 +1,15 @@
 import { useState } from "react"
 import Input from "../Input.jsx"
 import Select from "../Select.jsx"
-import Button from "../Button.jsx"
 import { addMediaItem } from "../../api/mediaApi.js"
+import { cleanGenres, validateMedia } from "../utils/mediaValidation.jsx"
+import { toast } from "react-toastify"
 
 export default function AddMediaModal({ onClose, onSuccess }) {
   const [status, setStatus] = useState("0") // default: Plan To Watch
   const [saving, setSaving] = useState(false)
+  const [errors, setErrors] = useState({})
+  const [apiError, setApiError] = useState("")
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -16,20 +19,31 @@ export default function AddMediaModal({ onClose, onSuccess }) {
     const payload = {
       title: form.get("title"),
       yearReleased: Number(form.get("yearReleased")),
-      genres: form.get("genres"),
+      genres: form.get("genres") ? cleanGenres(form.get("genres")) : "",
       mediaType: Number(form.get("mediaType")),
       status: Number(form.get("status")),
       rating: form.get("rating") ? Number(form.get("rating")) : null,
     }
 
+    const errorsObj = validateMedia(payload)
+    if (Object.keys(errorsObj).length > 0) {
+      setErrors(errorsObj)
+      setSaving(false)
+      return
+    }
+
     try {
       await addMediaItem(payload)
-      onSuccess()
+      toast.success("✅ Media added successfully!") // success toast
+      onSuccess?.() // refresh list if parent passed it
       e.target.reset()
       setStatus("0")
+      setErrors({})
+      setApiError("")
     } catch (err) {
       console.error("❌ Error saving:", err)
-      alert("Failed to save media item. Check console for details.")
+      toast.error("❌ Failed to save media item") // error toast
+      setApiError("Failed to save media item. Please try again.")
     } finally {
       setSaving(false)
     }
@@ -40,10 +54,22 @@ export default function AddMediaModal({ onClose, onSuccess }) {
       <div className="bg-white backdrop-blur-md w-96 rounded-xl p-6 shadow-lg border border-white/40">
         <h2 className="text-lg font-bold text-center mb-4 text-gray-800">Add New Media</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <Input name="title" placeholder="Enter title..." required />
+        {/* API error banner (fallback if API fails silently) */}
+        {apiError && (
+          <div className="bg-red-100 text-red-700 p-2 rounded mb-4 text-sm text-center">
+            {apiError}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} noValidate className="space-y-3">
+          <Input name="title" placeholder="Enter title..." />
+          {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
+
           <Input name="yearReleased" type="number" placeholder="2024" required />
+          {errors.yearReleased && <p className="text-red-500 text-sm">{errors.yearReleased}</p>}
+
           <Input name="genres" placeholder="Action, Drama" />
+          {errors.genres && <p className="text-red-500 text-sm">{errors.genres}</p>}
 
           <Select name="mediaType" defaultValue="0">
             <option value="0">Movie</option>
@@ -56,7 +82,7 @@ export default function AddMediaModal({ onClose, onSuccess }) {
             value={status}
             onChange={(e) => setStatus(e.target.value)}
           >
-            <option value="0">Plan To Watch</option>
+            <option value="0">Planned</option>
             <option value="1">Watching</option>
             <option value="2">Watched</option>
             <option value="3">Dropped</option>
@@ -72,22 +98,22 @@ export default function AddMediaModal({ onClose, onSuccess }) {
             />
           )}
 
-            <div className="flex gap-2">
-                <Button
-                    type="submit"
-                    disabled={saving}
-                    className="flex-1 bg-blue-500 hover:bg-blue-600 text-white"
-                >
-                    {saving ? "Saving..." : "Save"}
-                </Button>
-                <Button
-                    type="button"
-                    onClick={onClose}
-                    className="flex-1 bg-gray-400 hover:bg-gray-500 text-white"
-                >
-                    Cancel
-                </Button>
-            </div>
+          <div className="flex gap-2">
+            <button
+              type="submit"
+              disabled={saving}
+              className="flex-1 bg-blue-500 hover:bg-blue-600 text-white"
+            >
+              {saving ? "Saving..." : "Save"}
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 bg-gray-400 hover:bg-gray-500 text-white"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>

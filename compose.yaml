@@ -1,0 +1,55 @@
+services:
+  # 1️⃣ SQL Server Database
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mediadb
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - appnet
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  # 2️⃣ ASP.NET Backend API
+  backend:
+    build:
+      context: ./MediaAPI
+      dockerfile: Dockerfile
+    container_name: media-api
+    depends_on:
+      - mssql
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5077
+      - ConnectionStrings__DefaultConnection=Server=mssql,1433;Database=MediaDB;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+    ports:
+      - "5077:5077"
+    networks:
+      - appnet
+
+  # 3️⃣ React Frontend
+  frontend:
+    build:
+      context: ./MediaDesign
+      dockerfile: Dockerfile
+    container_name: media-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    environment:
+      # Your frontend will use this API base URL
+      - VITE_API_URL=http://localhost:5077
+    networks:
+      - appnet
+
+# Shared network and DB volume
+networks:
+  appnet:
+    driver: bridge
+
+volumes:
+  sql_data:

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaAPI.Migrations
 {
     [DbContext(typeof(MediaDbContext))]
-    [Migration("20250930032416_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251001044558_AddedUserTable")]
+    partial class AddedUserTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,28 +1,38 @@
-import axios from "axios"
+import axios from "axios";
 
-const api = axios.create({
-  baseURL: "http://localhost:5077/api"
-})
+const API_URL = import.meta.env.VITE_API_URL;
 
-// POST new media item
-export function addMediaItem(payload) {
-  return api.post("/MediaItems", payload)
+export function getAuthHeaders() {
+  const token = localStorage.getItem("token"); // 👈 get from localStorage
+  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
-export function getMediaItems() {
-  return api.get("/MediaItems")
+export async function getMediaItems() {
+  return axios.get(`${API_URL}/api/MediaItems`, {
+    headers: getAuthHeaders(),
+  });
 }
 
-export function deleteMediaItem(id) {
-  return api.delete(`/MediaItems/${id}`)
+export async function getMediaItemById(id) {
+  return axios.get(`${API_URL}/api/MediaItems/${id}`, {
+    headers: getAuthHeaders(),
+  });
 }
 
-// Get single item by id
-export function getMediaItemById(id) {
-  return api.get(`/MediaItems/${id}`)
+export async function addMediaItem(data) {
+  return axios.post(`${API_URL}/api/MediaItems`, data, {
+    headers: getAuthHeaders(),
+  });
 }
 
-// Update item
-export function updateMediaItem(id, payload) {
-  return api.put(`/MediaItems/${id}`, payload)
+export async function updateMediaItem(id, data) {
+  return axios.put(`${API_URL}/api/MediaItems/${id}`, data, {
+    headers: getAuthHeaders(),
+  });
+}
+
+export async function deleteMediaItem(id) {
+  return axios.delete(`${API_URL}/api/MediaItems/${id}`, {
+    headers: getAuthHeaders(),
+  });
 }

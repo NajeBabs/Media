@@ -8,5 +8,16 @@ namespace MediaAPI.Data
         public MediaDbContext(DbContextOptions<MediaDbContext> options) : base(options) { }
 
         public DbSet<MediaItem> MediaItems { get; set; }
+        public DbSet<Fan> Fans { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<MediaItem>()
+                .HasOne(m => m.Fan)
+                .WithMany()
+                .HasForeignKey(m => m.FanId);
+        }
     }
 }

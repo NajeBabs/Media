@@ -11,6 +11,7 @@ C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\bin\Debug\net9.0\AutoMapper.Ext
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\bin\Debug\net9.0\Azure.Core.dll
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\bin\Debug\net9.0\Azure.Identity.dll
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\bin\Debug\net9.0\Humanizer.dll
+C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\bin\Debug\net9.0\Microsoft.Build.Locator.dll
@@ -153,6 +154,7 @@ C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\obj\Debug\net9.0\MediaAPI.Assem
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\obj\Debug\net9.0\MediaAPI.csproj.CoreCompileInputs.cache
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\obj\Debug\net9.0\MediaAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\obj\Debug\net9.0\MediaAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\obj\Debug\net9.0\MediaAPI.sourcelink.json
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\TRAINEE-BARORO\source\MediaApp\MediaAPI\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json

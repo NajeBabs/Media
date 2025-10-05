@@ -21,6 +21,39 @@ namespace MediaAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("MediaAPI.Models.Fan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Fans", (string)null);
+                });
+
             modelBuilder.Entity("MediaAPI.Models.MediaItem", b =>
                 {
                     b.Property<int>("Id")
@@ -28,6 +61,9 @@ namespace MediaAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FanId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Genres")
                         .HasColumnType("nvarchar(max)");
@@ -50,7 +86,20 @@ namespace MediaAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MediaItems");
+                    b.HasIndex("FanId");
+
+                    b.ToTable("MediaItems", (string)null);
+                });
+
+            modelBuilder.Entity("MediaAPI.Models.MediaItem", b =>
+                {
+                    b.HasOne("MediaAPI.Models.Fan", "Fan")
+                        .WithMany()
+                        .HasForeignKey("FanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Fan");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { getMediaItemById, updateMediaItem } from "../api/mediaApi.js"
-import Input from "../components/Input.jsx"
-import Select from "../components/Select.jsx"
-import Button from "../components/Button.jsx"
+import { getMediaItemById, updateMediaItem } from "../../src/api/mediaApi.js"
+import Input from "../../src/components/Input.jsx"
+import Select from "../../src/components/Select.jsx"
+import Button from "../../src/components/Button.jsx"
 
 export default function EditPage() {
   const { id } = useParams()

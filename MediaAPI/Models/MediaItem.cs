@@ -15,5 +15,9 @@ namespace MediaAPI.Models
         public WatchStatus Status { get; set; }
 
         public int? Rating { get; set; } // allowed only if status is Watching, Watched, Dropped
+
+        // 🔑 New fields
+        public int FanId { get; set; }
+        public Fan Fan { get; set; } = null!;
     }
 }

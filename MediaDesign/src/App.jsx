@@ -1,30 +1,22 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ListPage from "./pages/ListPage.jsx"
-import AddPage from "./pages/AddPage.jsx"
-import EditPage from "./pages/EditPage.jsx"
-import DetailsPage from "./pages/DetailsPage.jsx"
 import NotFoundPage from "./pages/NotFoundPage.jsx"
+import AddMediaModal from "./components/modals/AddMediaModal.jsx"
 import { ToastContainer } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
-
-function TopNav() {
-  return (
-    <nav className="flex gap-4 p-4 border-b bg-white">
-      <Link to="/" className="font-bold text-xl text-blue-600">Media Collection</Link>
-    </nav>
-  )
-}
+import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx"
+import TopNav from "./components/TopNav.jsx"   // 👈 import new TopNav
 
 export default function App() {
   return (
     <BrowserRouter>
-      <TopNav />
+      <TopNav /> 
       <div className="min-h-screen bg-gradient-to-br from-[#f7cac9] to-[#92a8d1]">
         <Routes>
-          <Route path="/" element={<ListPage />} />
-          <Route path="/add" element={<AddPage />} />
-          <Route path="/edit/:id" element={<EditPage />} />
-          <Route path="/details/:id" element={<DetailsPage />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/media" element={<ListPage />} /> 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <ToastContainer

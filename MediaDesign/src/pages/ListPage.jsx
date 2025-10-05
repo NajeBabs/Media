@@ -12,7 +12,22 @@ export default function ListPage() {
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
-    loadItems()
+    async function fetchItems() {
+      setLoading(true)
+      const start = Date.now()
+
+      const res = await getMediaItems()
+
+      const elapsed = Date.now() - start
+      const remaining = 1000 - elapsed
+
+      setTimeout(() => {
+        setItems(res.data)
+        setLoading(false)
+      }, remaining > 0 ? remaining : 0)
+    }
+
+    fetchItems()
   }, [])
 
   async function loadItems() {
@@ -43,13 +58,25 @@ export default function ListPage() {
     }
   }
 
-  async function handleUpdate(id, updatedRow) {
+  async function handleUpdate(id, data) {
     try {
-      await updateMediaItem(id, updatedRow)
-      toast.success("Updated successfully")
-      loadItems()
-    } catch {
-      toast.error("Failed to update")
+      const payload = {
+        title: data.title,
+        yearReleased: parseInt(data.yearReleased),
+        genres: data.genres,
+        mediaType: parseInt(data.mediaType),
+        status: parseInt(data.status),
+        rating: data.rating ? parseInt(data.rating) : null
+      };
+
+      const res = await updateMediaItem(id, payload);
+
+      // Update state without full reload
+      setItems(prev =>
+        prev.map(item => (item.id === id ? res.data : item))
+      );
+    } catch (err) {
+      console.error("Update failed:", err.response?.data || err.message);
     }
   }
 
@@ -79,7 +106,7 @@ export default function ListPage() {
             onSuccess={() => {
               setShowModal(false)
               loadItems()
-              toast.success("Media added successfully")
+              // toast.success("Media added successfully")
             }}
           />
         )}
