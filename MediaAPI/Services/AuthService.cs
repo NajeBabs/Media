@@ -19,9 +19,9 @@ namespace MediaAPI.Services
         // Create password hash + salt
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            using var hmac = new HMACSHA512();
-            passwordSalt = hmac.Key;
-            passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            using var hmac = new HMACSHA512();                                      // generates a random Key — this will serve as your password salt.
+            passwordSalt = hmac.Key;                                                // ensures that even if two users have the same password, their hashes will be completely different.
+            passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));      // computes the hash of the password combined with the salt.
         }
 
         // Verify password against hash + salt
@@ -51,6 +51,7 @@ namespace MediaAPI.Services
                 expires: DateTime.Now.AddHours(1),
                 signingCredentials: creds
             );
+            // “I’m user ID 1, username ‘naje’, and my session is valid until 1 hour from now — signed by the backend.”
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

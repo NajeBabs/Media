@@ -1,11 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ListPage from "./pages/ListPage.jsx"
 import NotFoundPage from "./pages/NotFoundPage.jsx"
-import AddMediaModal from "./components/modals/AddMediaModal.jsx"
 import { ToastContainer } from "react-toastify"
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx"
-import TopNav from "./components/TopNav.jsx"   // 👈 import new TopNav
+import TopNav from "./components/TopNav.jsx"   // import TopNav
 
 export default function App() {
   return (

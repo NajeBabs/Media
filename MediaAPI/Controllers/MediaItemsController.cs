@@ -12,25 +12,23 @@ namespace MediaAPI.Controllers
     public class MediaItemsController : ControllerBase
     {
         private readonly IMediaItemService _service;
-
-        public MediaItemsController(IMediaItemService service)
-        {
-            _service = service;
-        }
+        public MediaItemsController(IMediaItemService service) => _service = service;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MediaItemReadDto>>> GetAll()
         {
             var fanId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            return Ok(await _service.GetAllAsync(fanId));        }
+            return Ok(await _service.GetAllAsync(fanId));
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<MediaItemReadDto>> GetById(int id)
         {
             var fanId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var item = await _service.GetByIdAsync(id, fanId);
-            if (item == null) return NotFound();
+            if (item == null) return NotFound();  // <-- translates business result to HTTP
             return Ok(item);
+
         }
 
         [HttpPost]
@@ -47,7 +45,7 @@ namespace MediaAPI.Controllers
         {
             var fanId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var updated = await _service.UpdateAsync(id, dto, fanId);
-            if (updated == null) return NotFound();
+            if (updated == null) return NotFound(); // 404 for frontend clarity
             return Ok(updated);
         }
 
@@ -56,8 +54,9 @@ namespace MediaAPI.Controllers
         {
             var fanId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             var deleted = await _service.DeleteAsync(id, fanId);
-            if (!deleted) return NotFound();
-            return NoContent();
+            if (!deleted) return NotFound();  // 404 for frontend clarity
+            return NoContent();               // 204 for success
+
         }
     }
 }

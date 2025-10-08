@@ -2,7 +2,7 @@ services:
   # 1️⃣ SQL Server Database
   mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: mediadb
+    container_name: media-database
     environment:
       SA_PASSWORD: "YourStrong!Passw0rd"
       ACCEPT_EULA: "Y"
@@ -18,7 +18,7 @@ services:
     build:
       context: ./MediaAPI
       dockerfile: Dockerfile
-    container_name: media-api
+    container_name: backend
     depends_on:
       - mssql
     environment:
@@ -35,7 +35,7 @@ services:
     build:
       context: ./MediaDesign
       dockerfile: Dockerfile
-    container_name: media-frontend
+    container_name: frontend
     ports:
       - "5173:80"
     depends_on:

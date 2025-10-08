@@ -1,6 +1,6 @@
 import { useState } from "react"
-import Input from "../Input.jsx"
-import Select from "../Select.jsx"
+// import Input from "../Input.jsx"
+// import Select from "../Select.jsx"
 import { addMediaItem } from "../../api/mediaApi.js"
 import { cleanGenres, validateMedia } from "../utils/mediaValidation.jsx"
 import { toast } from "react-toastify"
@@ -62,13 +62,13 @@ export default function AddMediaModal({ onClose, onSuccess }) {
         )}
 
         <form onSubmit={handleSubmit} noValidate className="space-y-3">
-          <Input name="title" placeholder="Enter title..." />
+          <input name="title" placeholder="Enter title..." />
           {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
 
-          <Input name="yearReleased" type="number" placeholder="2024" required />
+          <input name="yearReleased" type="number" placeholder="2024" required />
           {errors.yearReleased && <p className="text-red-500 text-sm">{errors.yearReleased}</p>}
 
-          <Input name="genres" placeholder="Action, Drama" />
+          <input name="genres" placeholder="Action, Drama" />
           {errors.genres && <p className="text-red-500 text-sm">{errors.genres}</p>}
 
           <Select name="mediaType" defaultValue="0">
@@ -89,7 +89,7 @@ export default function AddMediaModal({ onClose, onSuccess }) {
           </Select>
 
           {status !== "0" && (
-            <Input
+            <input
               name="rating"
               type="number"
               placeholder="1–10"

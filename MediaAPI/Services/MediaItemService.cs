@@ -28,6 +28,7 @@ namespace MediaAPI.Services
                     Status = m.Status,
                     Rating = m.Rating
                 })
+                .OrderByDescending(m => m.Title)
                 .ToListAsync();
         }
 

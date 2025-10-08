@@ -16,6 +16,7 @@ builder.Services.AddDbContext<MediaDbContext>(options =>
 builder.Services.AddScoped<IMediaItemService, MediaItemService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+// Add Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -31,12 +32,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Add Authorization
 builder.Services.AddAuthorization();
 
 // Add controllers + Swagger
 builder.Services.AddControllers();
 
-
+// Add CORS
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("DevCors", p =>
@@ -45,7 +47,7 @@ builder.Services.AddCors(opt =>
          .AllowAnyMethod());
 });
 
-
+// Add Swagger Setup
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -55,11 +57,11 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1" 
     });
 
-    // 🔑 Enable JWT Auth in Swagger
+    // Enable JWT Auth in Swagger
     c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Name = "Authorization",
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http, // 👈 Use Http instead of ApiKey
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http, // Use Http instead of ApiKey
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
