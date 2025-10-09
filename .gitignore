@@ -1,0 +1,128 @@
+# =========================
+# 🌐 FRONTEND (React + Vite)
+# =========================
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# =========================
+# ⚙️ BACKEND (.NET Core API)
+# =========================
+# Build results
+[Bb]in/
+[Oo]bj/
+[Mm]igrations/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.cache
+*.dll
+*.pdb
+*.exe
+*.appx
+*.log
+*.vspscc
+*.vssscc
+*.vsp
+*.vsmdi
+*.dbmdl
+
+# Auto-generated files
+*.db
+*.bak
+*.ldf
+*.mdf
+
+# Visual Studio
+.vs/
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.sw?
+
+# Publish
+**/publish/
+**/out/
+**/artifacts/
+
+# =========================
+# 🐳 DOCKER
+# =========================
+*.pid
+*.tar
+*.tmp
+docker-compose.override.yml
+docker-compose.*.yml
+!compose.yaml
+!compose.debug.yaml
+
+# =========================
+# 🧪 TESTING
+# =========================
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# =========================
+# 🗂️ OS / SYSTEM FILES
+# =========================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# =========================
+# 📦 PACKAGE LOCKS (optional)
+# =========================
+# Uncomment if you don’t want to commit lock files
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# =========================
+# 🔧 ENVIRONMENT / CONFIG
+# =========================
+.env
+.env.*
+*.local.json
+appsettings.Development.json
+appsettings.*.local.json
+
+# =========================
+# 📄 DOCUMENTATION / MISC
+# =========================
+*.tmp
+*.bak
+*.orig
+*.rej
+*.old
+*.log
+
+# =========================
+# 📁 MONOREPO ROOT
+# =========================
+# Ignore Visual Studio / build outputs at root
+*.vs/
+*.vscode/
+bin/
+obj/
+
+# =========================
+# ✅ KEEP THESE FILES
+# =========================
+!.gitignore
+!README.md
+!compose.yaml
+!compose.debug.yaml
